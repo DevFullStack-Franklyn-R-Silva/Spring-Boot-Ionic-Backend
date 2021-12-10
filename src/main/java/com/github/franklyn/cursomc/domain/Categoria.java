@@ -12,6 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "tb_categoria")
@@ -23,7 +24,7 @@ public class Categoria implements Serializable {
 	private Integer id;
 	private String nome;
 
-	@JsonIgnore
+	@JsonManagedReference
 	@ManyToMany(mappedBy = "categorias")
 	private List<Produto> produtos = new ArrayList<>();
 	//private Set<Produto> produtos = new HashSet<>();
