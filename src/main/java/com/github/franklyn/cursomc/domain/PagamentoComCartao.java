@@ -1,7 +1,10 @@
 package com.github.franklyn.cursomc.domain;
 
+import javax.persistence.Entity;
+
 import com.github.franklyn.cursomc.domain.enums.EstadoPagamento;
 
+@Entity
 public class PagamentoComCartao extends Pagamento {
 	private static final long serialVersionUID = 1L;
 	
