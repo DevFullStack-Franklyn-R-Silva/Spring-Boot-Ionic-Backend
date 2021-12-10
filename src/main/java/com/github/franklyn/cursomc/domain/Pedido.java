@@ -3,6 +3,7 @@ package com.github.franklyn.cursomc.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,7 +20,7 @@ public class Pedido implements Serializable {
 	private Integer id;
 	private Date instante;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
 	private Pagamento pagamento;
 
 	@ManyToOne
