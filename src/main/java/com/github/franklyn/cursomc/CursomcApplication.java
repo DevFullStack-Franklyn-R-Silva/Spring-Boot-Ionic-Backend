@@ -61,7 +61,7 @@ public class CursomcApplication implements CommandLineRunner {
 
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
-	
+
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
 
@@ -134,15 +134,16 @@ public class CursomcApplication implements CommandLineRunner {
 		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.0, 1, 2000.0);
 		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.0, 2, 80.0);
 		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.0, 1, 800.0);
-		
-		ped1.getItens().addAll(Arrays.asList(ip1,ip2));;
+
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		;
 		ped2.getItens().addAll(Arrays.asList(ip3));
-		
+
 		p1.getItens().addAll(Arrays.asList(ip1));
 		p2.getItens().addAll(Arrays.asList(ip3));
 		p3.getItens().addAll(Arrays.asList(ip2));
-		
-		itemPedidoRepository.saveAll(Arrays.asList(ip1,ip2,ip3));
-		
+
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
+
 	}
 }
