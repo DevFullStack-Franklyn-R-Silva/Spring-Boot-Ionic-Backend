@@ -13,10 +13,10 @@ import com.github.franklyn.cursomc.services.exceptions.ObjectNotFoundException;
 public class PedidoService {
 
 	@Autowired
-	private PedidoRepository categoriaRepository;
+	private PedidoRepository repository;
 
 	public Pedido find(Integer id) {
-		Optional<Pedido> obj = categoriaRepository.findById(id);
+		Optional<Pedido> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + " Tipo: " + Pedido.class.getName()));
 	}
