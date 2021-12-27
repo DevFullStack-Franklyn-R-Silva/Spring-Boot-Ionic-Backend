@@ -6,12 +6,19 @@ import java.util.List;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.github.franklyn.cursomc.domain.Cliente;
 import com.github.franklyn.cursomc.domain.enums.TipoCliente;
 import com.github.franklyn.cursomc.dto.ClienteNewDTO;
+import com.github.franklyn.cursomc.repositories.ClienteRepository;
 import com.github.franklyn.cursomc.resources.exceptions.FieldMessage;
 import com.github.franklyn.cursomc.services.validation.utils.BR;
 
 public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert, ClienteNewDTO> {
+
+	@Autowired
+	private ClienteRepository clienteRepository;
 
 	@Override
 	public void initialize(ClienteInsert ann) {
@@ -22,9 +29,6 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
 
 		List<FieldMessage> list = new ArrayList<>();
 
-		if (objDto.getTipo() == null) {
-			list.add(new FieldMessage("tipo", "Tipo não pode ser nulo"));
-		}
 		if (objDto.getTipo().equals(TipoCliente.PESSOA_FISICA.getCod()) && !BR.isValidCPF(objDto.getCpfOuCnpj())) {
 			list.add(new FieldMessage("CpfOuCnpj", "CPF inválido"));
 		}
@@ -32,7 +36,10 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
 			list.add(new FieldMessage("CpfOuCnpj", "CNPJ inválido"));
 		}
 
-		// inclua os testes aqui, inserindo erros na lista
+		Cliente aux = clienteRepository.findByEmail(objDto.getEmail());
+		if (aux != null) {
+			list.add(new FieldMessage("email", "Email já existente"));
+		}
 
 		for (FieldMessage e : list) {
 			context.disableDefaultConstraintViolation();
