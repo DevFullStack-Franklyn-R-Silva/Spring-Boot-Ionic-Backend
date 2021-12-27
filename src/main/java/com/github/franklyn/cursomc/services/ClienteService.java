@@ -27,10 +27,10 @@ public class ClienteService {
 
 	@Autowired
 	private ClienteRepository clienteRepository;
-	
+
 	@Autowired
 	private EnderecoRepository enderecoRepository;
-	
+
 	public Cliente find(Integer id) {
 		Optional<Cliente> obj = clienteRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
@@ -43,7 +43,7 @@ public class ClienteService {
 		obj = clienteRepository.save(obj);
 		enderecoRepository.saveAll(obj.getEnderecos());
 		return obj;
-		
+
 	}
 
 	public Cliente update(Cliente obj) {
@@ -57,7 +57,7 @@ public class ClienteService {
 			find(id);
 			clienteRepository.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DateIntegrityException("Não é possível excluir porque há entidades relacionadas");
+			throw new DateIntegrityException("Não é possível excluir porque há pedidos relacionados");
 		}
 	}
 
@@ -78,7 +78,7 @@ public class ClienteService {
 		Cliente cli = new Cliente(null, objDto.getNome(), objDto.getEmail(), objDto.getCpfOuCnpj(),
 				TipoCliente.toEnum(objDto.getTipo()));
 		Cidade cid = new Cidade(objDto.getCidadeId(), null, null);
-		//Cidade cid = cidadeRepository.findById(objDto.getCidadeId()).get();
+		// Cidade cid = cidadeRepository.findById(objDto.getCidadeId()).get();
 		Endereco end = new Endereco(null, objDto.getLogradouro(), objDto.getNumero(), objDto.getComplemento(),
 				objDto.getBairro(), objDto.getCep(), cli, cid);
 		cli.getEnderecos().add(end);
